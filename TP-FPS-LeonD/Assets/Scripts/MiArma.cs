@@ -7,7 +7,7 @@ public class MiArma : MonoBehaviour
 {
     [SerializeField] GameObject BalaPrefab;
     [SerializeField] Transform SpawnBala;
-    [SerializeField] float VelocidadBala = 1000f;
+    [SerializeField] float VelocidadBala = 200f;
     [SerializeField] float VelocidadDisparo = 0.1f;
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject VFXdisparo;
