@@ -5,24 +5,47 @@ using UnityEngine.SceneManagement;
 
 public class ReglasDeJuego : MonoBehaviour
 {
-    public int score = 0; //Puntos que juntas
-    public int totalScore = 0; //Total de puntos
-    public TextMeshProUGUI Puntaje; //Texto para UI
+    public static ReglasDeJuego instance;
+
+    public int PuntosZombie = 0; //Puntos zombies
+    public int totalpuntoszombies = 0; //Total zombies
+    public TextMeshProUGUI TextPZombie; //Texto para UI
     public string EnemigoTag = "Enemigo"; //Etiqueta de Puntos
     public int PuntosPorZombie = 1; //Puntos que da por zombie
+
+    public int PuntosMoneda = 0; //Puntos moneda
+    public int TotalMonedas = 0; //Total monedas
+    public TextMeshProUGUI TextPMonedas;
+    public string MonedaTag = "Moneda";
+    public int PuntosPorMoneda = 1;
+
     public GameObject PerderPanel;
     public GameObject GanarPanel;
+
     public GameObject Player;
     public GameObject PlayerCamera;
+
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip SonidoVictoria;
     [SerializeField] AudioClip SonidoDerrota;
     [SerializeField] AudioClip MusicaAmbiente;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     void Start()
     {
-        //Cuenta cantidad de etiquetas con "Puntos"
+        //Cuenta cantidad de etiquetas "Zombie"
         GameObject[] collectibles = GameObject.FindGameObjectsWithTag(EnemigoTag);
-        totalScore = collectibles.Length * PuntosPorZombie;
+        totalpuntoszombies = collectibles.Length * PuntosPorZombie;
+        //Cuenta cantidad de etiquetas "Monedas"
+        GameObject[] collectibles1 = GameObject.FindGameObjectsWithTag(MonedaTag);
+        TotalMonedas = collectibles1.Length * PuntosPorMoneda;
         //Actualiza "Puntaje"
         UpdateScoreUI();
         //Desactiva las UI
@@ -37,11 +60,26 @@ public class ReglasDeJuego : MonoBehaviour
     }
     public void SumarPunto(int amount)
     {
-        score += amount;
+        PuntosZombie += amount;
         UpdateScoreUI();
-        if (score >= totalScore)
-            Win();
+        RevisarVictoria();
     }
+
+    public void SumarMoneda(int amount)
+    {
+        PuntosMoneda += 1;
+        UpdateScoreUI();
+        RevisarVictoria();
+    }
+
+    public void RevisarVictoria()
+    {
+        if (PuntosMoneda >= TotalMonedas && PuntosZombie >= totalpuntoszombies)
+        {
+            Win();
+        }
+    }
+
     void Win()
     {
         if (GanarPanel)
@@ -64,9 +102,13 @@ public class ReglasDeJuego : MonoBehaviour
     }
     void UpdateScoreUI()
     {
-        if (Puntaje != null)
+        if (TextPZombie != null)
         {
-            Puntaje.text = "Zombies: " + score + "/" + totalScore;
+            TextPZombie.text = "Zombies: " + PuntosZombie + "/" + totalpuntoszombies;
+        }
+        if (TextPMonedas != null)
+        {
+            TextPMonedas.text = "Monedas: " + PuntosMoneda + "/" + TotalMonedas;
         }
     }
 

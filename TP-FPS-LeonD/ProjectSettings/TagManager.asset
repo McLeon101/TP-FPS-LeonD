@@ -8,6 +8,8 @@ TagManager:
   - Enemigo
   - Bala
   - Objetivo
+  - Moneda
+  - Pastilla
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -11,7 +12,13 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
-		[Header("Player")]
+		public bool PowerJumpBool = false;
+		public float PowerJumpHeight = 7f;
+        private Coroutine rutina;
+
+
+
+        [Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed = 4.0f;
 		[Tooltip("Sprint speed of the character in m/s")]
@@ -214,8 +221,15 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					if (PowerJumpBool == true)
+					{
+						_verticalVelocity = Mathf.Sqrt(PowerJumpHeight * -2f * Gravity);
+					}
+					else
+					{
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					}
 				}
 
 				// jump timeout
@@ -264,5 +278,22 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-	}
+
+		public void PowerJump()
+		{
+			if (rutina != null)
+				StopCoroutine(rutina);
+			rutina = StartCoroutine(DuracionPowerUp());
+		}
+        IEnumerator DuracionPowerUp()
+        {
+            PowerJumpBool = true;
+            Debug.Log("Power Up ACTIVADO");
+
+            yield return new WaitForSeconds(10f);
+
+            PowerJumpBool = false;
+            Debug.Log("Power Up DESACTIVADO");
+        }
+    }
 }
