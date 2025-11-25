@@ -13,8 +13,9 @@ namespace StarterAssets
 	public class FirstPersonController : MonoBehaviour
 	{
 		public bool PowerJumpBool = false;
-		public float PowerJumpHeight = 10f;
+		public float PowerJumpHeight = 15f;
         private Coroutine rutina;
+		public GameObject SuperSaltoPanel; 
 
 
 
@@ -115,6 +116,7 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+			if (SuperSaltoPanel) SuperSaltoPanel.SetActive(false);
 		}
 
 		private void Update()
@@ -288,10 +290,12 @@ namespace StarterAssets
         IEnumerator DuracionPowerUp()
         {
             PowerJumpBool = true;
+            if (SuperSaltoPanel) SuperSaltoPanel.SetActive(true);
 
             yield return new WaitForSeconds(10f);
 
             PowerJumpBool = false;
+            if (SuperSaltoPanel) SuperSaltoPanel.SetActive(false);
         }
     }
 }

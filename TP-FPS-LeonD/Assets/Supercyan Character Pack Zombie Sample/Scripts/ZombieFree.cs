@@ -7,6 +7,7 @@ public class ZombieFree : MonoBehaviour
     private Animator[] m_animators;
     [SerializeField] private ZombieCameraLogic m_cameraLogic;
 
+    [System.Obsolete]
     private void Start()
     {
         m_animators = FindObjectsOfType<Animator>();
