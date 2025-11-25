@@ -288,12 +288,10 @@ namespace StarterAssets
         IEnumerator DuracionPowerUp()
         {
             PowerJumpBool = true;
-            Debug.Log("Power Up ACTIVADO");
 
             yield return new WaitForSeconds(10f);
 
             PowerJumpBool = false;
-            Debug.Log("Power Up DESACTIVADO");
         }
     }
 }

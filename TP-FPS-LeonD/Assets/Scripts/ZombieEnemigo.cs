@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.AI;
 using UnityEngine;
@@ -24,6 +25,10 @@ public class ZombieEnemigo : MonoBehaviour
     public int PuntosPorZombie = 1;
     public int DañoZombie = 20;
 
+    public GameObject SFXAtaque;
+
+    private Coroutine RutinAtaque;
+
     private void Start()
     {
         zombieAnimator = GetComponent<Animator>();
@@ -42,6 +47,7 @@ public class ZombieEnemigo : MonoBehaviour
         float randomSpeed = Random.Range(0.8f, 1.5f);
         zombieNavMeshAgent.speed = randomSpeed;
         zombieAnimator.speed = randomSpeed;
+        if (SFXAtaque) SFXAtaque.SetActive(false);
     }
     private void Update()
     {
@@ -87,6 +93,7 @@ public class ZombieEnemigo : MonoBehaviour
         {
             zombieAnimator.SetTrigger("Attack");
             RuidoAtaque();
+            EfectoAtaque();
             vidaplayer.AtaqueZombie(DañoZombie);
         }
     }
@@ -123,5 +130,19 @@ public class ZombieEnemigo : MonoBehaviour
         {
             audioSource.PlayOneShot(SonidoDaño);
         }
+    }
+    public void EfectoAtaque()
+    {
+        if (RutinAtaque != null)
+            StopCoroutine(RutinAtaque);
+        RutinAtaque = StartCoroutine(TiempoDaño());
+    }
+    IEnumerator TiempoDaño()
+    {
+        if (SFXAtaque) SFXAtaque.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (SFXAtaque) SFXAtaque.SetActive(false);
     }
 }
