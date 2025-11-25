@@ -13,7 +13,7 @@ namespace StarterAssets
 	public class FirstPersonController : MonoBehaviour
 	{
 		public bool PowerJumpBool = false;
-		public float PowerJumpHeight = 7f;
+		public float PowerJumpHeight = 10f;
         private Coroutine rutina;
 
 

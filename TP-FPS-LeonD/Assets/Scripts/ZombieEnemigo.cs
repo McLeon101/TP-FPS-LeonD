@@ -26,7 +26,6 @@ public class ZombieEnemigo : MonoBehaviour
     public int DañoZombie = 20;
 
     public GameObject SFXAtaque;
-
     private Coroutine RutinAtaque;
 
     private void Start()
@@ -139,10 +138,16 @@ public class ZombieEnemigo : MonoBehaviour
     }
     IEnumerator TiempoDaño()
     {
-        if (SFXAtaque) SFXAtaque.SetActive(true);
+        if (SFXAtaque)
+        {
+            SFXAtaque.SetActive(true);
+        }
 
         yield return new WaitForSeconds(0.1f);
 
-        if (SFXAtaque) SFXAtaque.SetActive(false);
+        if (SFXAtaque)
+        {
+            SFXAtaque.SetActive(false);
+        }
     }
 }

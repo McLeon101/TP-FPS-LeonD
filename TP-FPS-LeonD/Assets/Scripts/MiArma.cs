@@ -7,21 +7,36 @@ public class MiArma : MonoBehaviour
 {
     [SerializeField] GameObject BalaPrefab;
     [SerializeField] Transform SpawnBala;
+
     [SerializeField] float VelocidadBala = 200f;
     [SerializeField] float VelocidadDisparo = 0.1f;
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] GameObject VFXdisparo;
-    public enum ModoDeFuego { SemiAuto, RafagaAuto, FullAuto }
-    public ModoDeFuego mododefuego = ModoDeFuego.SemiAuto;
-    private float siguienteDisparo = 0f;
-    [SerializeField] TextMeshProUGUI ModoArmaText;
     public int RafagaCount = 3;
     public float RafagaDelay = 0.1f;
+    [SerializeField] int cargador = 9;
+    [SerializeField] bool Municion = true;
+    private float siguienteDisparo = 0f;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip SonidoDisparo;
+    [SerializeField] AudioClip SonidoSinBala;
+    [SerializeField] AudioClip SonidoRecarga;
+
+    [SerializeField] TextMeshProUGUI ModoArmaText;
+    [SerializeField] TextMeshProUGUI CantidadBalasTexto;
+
+    public enum ModoDeFuego { SemiAuto, RafagaAuto, FullAuto }
+    public ModoDeFuego mododefuego = ModoDeFuego.SemiAuto;
+
+
+    public Animator SpawnRifle;
+    [SerializeField] GameObject VFXdisparo;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         UpdateUI();
+        CantidadBalasTexto.text = "Balas: " + cargador.ToString() + "/9";
+        SpawnRifle = GetComponent<Animator>();
     }
     void Update()
     {
@@ -30,6 +45,15 @@ public class MiArma : MonoBehaviour
         {
             CambiarModoDeFuego();
             UpdateUI();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SpawnRifle.SetTrigger("Reload");
+            Municion = true;
+            cargador = 9;
+            CantidadBalasTexto.text = "Balas: " + cargador.ToString() + "/9";
+            if (SonidoRecarga != null && audioSource != null)
+            { audioSource.PlayOneShot(SonidoRecarga); }
         }
     }
 
@@ -40,7 +64,14 @@ public class MiArma : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1") && Time.time >= siguienteDisparo)
             {
-                Disparar();
+                if (Municion == true)
+                {
+                    Disparar();
+                }
+                else
+                {
+                    SinMunicion();
+                }
             }
         }
         //Disparo en rafagas
@@ -57,7 +88,14 @@ public class MiArma : MonoBehaviour
         {
             if (Input.GetButton("Fire1") && Time.time >= siguienteDisparo)
             {
-                Disparar();
+                if (Municion == true)
+                {
+                    Disparar();
+                }
+                else
+                {
+                    SinMunicion();
+                }
             }
         }
     }
@@ -73,10 +111,15 @@ public class MiArma : MonoBehaviour
         BalaRigidbody.AddForce(SpawnBala.forward * VelocidadBala);
         GameObject newVFX = Instantiate(VFXdisparo, SpawnBala.position, SpawnBala.rotation);
         //Sonido de la bala
-        if (audioSource != null)
+        if (SonidoDisparo != null && audioSource != null)
+        { audioSource.PlayOneShot(SonidoDisparo); }
+        //Recarga
+        cargador -= 1;
+        if (cargador <= 0)
         {
-            audioSource.Play();
+            Municion = false;
         }
+        CantidadBalasTexto.text = "Balas: " + cargador.ToString() + "/9";
         //Destruye la bala
         Destroy(newBala, 2f);
         Destroy(newVFX, 1f);
@@ -85,10 +128,22 @@ public class MiArma : MonoBehaviour
     {
         for (int i = 0; i < RafagaCount; i++)
         {
-            Disparar();
+            if (Municion == true)
+            {
+                Disparar();
+            }
+            else
+            {
+                SinMunicion();
+            }
             yield return new WaitForSeconds(RafagaDelay);
         }
     }
+    void SinMunicion()
+    {
+        if (SonidoSinBala != null && audioSource != null)
+        { audioSource.PlayOneShot(SonidoSinBala); }
+    }    
     private void UpdateUI()
     {
         ModoArmaText.text = "Modo de arma: " + mododefuego.ToString();

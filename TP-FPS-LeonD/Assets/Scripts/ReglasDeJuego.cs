@@ -41,6 +41,7 @@ public class ReglasDeJuego : MonoBehaviour
 
     void Start()
     {
+        BloquearMouse();
         //Cuenta cantidad de etiquetas "Zombie"
         GameObject[] collectibles = GameObject.FindGameObjectsWithTag(EnemigoTag);
         totalpuntoszombies = collectibles.Length * PuntosPorZombie;

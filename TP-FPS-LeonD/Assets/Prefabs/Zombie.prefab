@@ -443,7 +443,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   chaseInterval: 1
   PuntosPorZombie: 1
   "Da\xF1oZombie": 20
-  SFXAtaque: {fileID: 0}
+  SFXAtaque: {fileID: 4626813762823871734, guid: 509e0ce355f1c6743aa7d3b6e625bf83, type: 3}
 --- !u!195 &6888704381508650876
 NavMeshAgent:
   m_ObjectHideFlags: 0
