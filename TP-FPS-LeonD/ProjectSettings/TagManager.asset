@@ -11,6 +11,7 @@ TagManager:
   - Moneda
   - Pastilla
   - Jefe
+  - Llave
   layers:
   - Default
   - TransparentFX

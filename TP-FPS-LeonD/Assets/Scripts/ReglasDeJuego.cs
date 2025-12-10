@@ -31,6 +31,8 @@ public class ReglasDeJuego : MonoBehaviour
     [SerializeField] AudioClip SonidoDerrota;
     [SerializeField] AudioClip MusicaAmbiente;
 
+    public GameObject LlaveImage;
+
     private void Awake()
     {
         if (instance == null)
@@ -46,13 +48,14 @@ public class ReglasDeJuego : MonoBehaviour
         GameObject[] collectibles = GameObject.FindGameObjectsWithTag(EnemigoTag);
         totalpuntoszombies = collectibles.Length * PuntosPorZombie;
         //Cuenta cantidad de etiquetas "Monedas"
-        GameObject[] collectibles1 = GameObject.FindGameObjectsWithTag(MonedaTag);
-        TotalMonedas = collectibles1.Length * PuntosPorMoneda;
+        //GameObject[] collectibles1 = GameObject.FindGameObjectsWithTag(MonedaTag);
+        //TotalMonedas = collectibles1.Length * PuntosPorMoneda;
         //Actualiza "Puntaje"
         UpdateScoreUI();
         //Desactiva las UI
         if (PerderPanel) PerderPanel.SetActive(false);
         if (GanarPanel) GanarPanel.SetActive(false);
+        if (LlaveImage) LlaveImage.SetActive(false);
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -60,12 +63,12 @@ public class ReglasDeJuego : MonoBehaviour
         MusicaJuego();
         audioSource.volume = 0.2f;
     }
-    public void SumarPunto(int amount)
-    {
-        PuntosZombie += amount;
-        UpdateScoreUI();
-        RevisarVictoria();
-    }
+    //public void SumarPunto(int amount)
+    //{
+    //    PuntosZombie += amount;
+    //    UpdateScoreUI();
+    //    RevisarVictoria();
+    //}
 
     public void SumarMoneda(int amount)
     {
@@ -76,7 +79,7 @@ public class ReglasDeJuego : MonoBehaviour
 
     public void RevisarVictoria()
     {
-        if (PuntosMoneda >= TotalMonedas && PuntosZombie >= totalpuntoszombies)
+        if (PuntosMoneda >= totalpuntoszombies)
         {
             Win();
         }
@@ -106,12 +109,12 @@ public class ReglasDeJuego : MonoBehaviour
     {
         if (TextPZombie != null)
         {
-            TextPZombie.text = "Zombies: " + PuntosZombie + "/" + totalpuntoszombies;
+            TextPZombie.text = "Moneda: " + PuntosMoneda + "/" + totalpuntoszombies;
         }
-        if (TextPMonedas != null)
-        {
-            TextPMonedas.text = "Monedas: " + PuntosMoneda + "/" + TotalMonedas;
-        }
+        //if (TextPMonedas != null)
+        //{
+        //    TextPMonedas.text = "Monedas: " + PuntosMoneda + "/" + TotalMonedas;
+        //}
     }
 
     internal void SumarPunto()
@@ -157,5 +160,9 @@ public class ReglasDeJuego : MonoBehaviour
         {
             audioSource.PlayOneShot(MusicaAmbiente);
         }
+    }
+    public void TomarLLave()
+    {
+        LlaveImage.SetActive(true);
     }
 }

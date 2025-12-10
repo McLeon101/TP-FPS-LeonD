@@ -49,9 +49,8 @@ public class JefeEnemigo : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         InvokeRepeating(nameof(SetDestination), 3f, chaseInterval);
-        float randomSpeed = Random.Range(0.6f, 1f);
-        zombieNavMeshAgent.speed = randomSpeed;
-        zombieAnimator.speed = randomSpeed;
+        zombieNavMeshAgent.speed = 2f;
+        zombieAnimator.speed = 2f;
         if (SFXAtaque) SFXAtaque.SetActive(false);
     }
     private void Update()
@@ -76,10 +75,10 @@ public class JefeEnemigo : MonoBehaviour
                 RuidoMuerte();
                 zombieAnimator.SetTrigger("Dead");
                 //Destruye objeto
-                if (reglasdejuego != null)
-                {
-                    reglasdejuego.SumarPunto(PuntosPorZombie);
-                }
+                //if (reglasdejuego != null)
+                //{
+                //    reglasdejuego.SumarPunto(PuntosPorZombie);
+                //}
                 Muerte();
             }
             else

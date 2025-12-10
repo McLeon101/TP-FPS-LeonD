@@ -1102,6 +1102,7 @@ MonoBehaviour:
   chaseInterval: 1
   PuntosPorZombie: 1
   "Da\xF1oZombie": 20
+  Moneda: {fileID: 5342314398552287764, guid: 24c560cbf25a7b94cb6897d24573b761, type: 3}
   SFXAtaque: {fileID: 4626813762823871734, guid: 509e0ce355f1c6743aa7d3b6e625bf83, type: 3}
 --- !u!195 &6888704381508650876
 NavMeshAgent:

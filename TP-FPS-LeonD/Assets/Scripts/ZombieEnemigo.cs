@@ -24,6 +24,7 @@ public class ZombieEnemigo : MonoBehaviour
     private VidaPlayer vidaplayer;
     public int PuntosPorZombie = 1;
     public int DañoZombie = 20;
+    [SerializeField] GameObject Moneda;
 
     public GameObject SFXAtaque;
     private Coroutine RutinAtaque;
@@ -43,7 +44,7 @@ public class ZombieEnemigo : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         InvokeRepeating(nameof(SetDestination), 3f, chaseInterval);
-        float randomSpeed = Random.Range(1.2f, 2.5f);
+        float randomSpeed = Random.Range(1.5f, 3.5f);
         zombieNavMeshAgent.speed = randomSpeed;
         zombieAnimator.speed = randomSpeed;
         if (SFXAtaque) SFXAtaque.SetActive(false);
@@ -70,10 +71,10 @@ public class ZombieEnemigo : MonoBehaviour
                 RuidoMuerte();
                 zombieAnimator.SetTrigger("Dead");
                 //Destruye objeto
-                if (reglasdejuego != null)
-                {
-                    reglasdejuego.SumarPunto(PuntosPorZombie);
-                }
+                //if (reglasdejuego != null)
+                //{
+                //    reglasdejuego.SumarPunto(PuntosPorZombie);
+                //}
                 Muerte();
             }
             else
@@ -109,6 +110,9 @@ public class ZombieEnemigo : MonoBehaviour
     private void Muerte()
     {
         zombieNavMeshAgent.isStopped = true;
+        DañoZombie = 0;
+        Vector3 offset = new Vector3(0, 0.8f, 0);
+        Instantiate(Moneda, transform.position + offset, Quaternion.identity);
         Destroy(gameObject, 1.5f);
     }
     void RuidoAtaque()
@@ -143,7 +147,7 @@ public class ZombieEnemigo : MonoBehaviour
             SFXAtaque.SetActive(true);
         }
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
 
         if (SFXAtaque)
         {

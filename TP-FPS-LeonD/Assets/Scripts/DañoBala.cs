@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class DañoBala : MonoBehaviour
 {
-    public float CantidadDaño = 25f;
+    public float CantidadDaño = 20f;
 }
