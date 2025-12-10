@@ -7,9 +7,10 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class ZombieEnemigo : MonoBehaviour
+public class JefeEnemigo : MonoBehaviour
 {
-    [SerializeField] private float Salud = 100f;
+    [SerializeField] private float SaludTotal = 500f;
+    private float Salud;
     [SerializeField] private TextMeshProUGUI SaludTexto;
     [SerializeField] private Image BarraVida;
     private Animator zombieAnimator;
@@ -23,10 +24,15 @@ public class ZombieEnemigo : MonoBehaviour
     private ReglasDeJuego reglasdejuego;
     private VidaPlayer vidaplayer;
     public int PuntosPorZombie = 1;
-    public int DañoZombie = 20;
+    public int DañoZombie = 50;
 
     public GameObject SFXAtaque;
     private Coroutine RutinAtaque;
+
+    void Awake()
+    {
+       Salud = SaludTotal;
+    }
 
     private void Start()
     {
@@ -43,7 +49,7 @@ public class ZombieEnemigo : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         InvokeRepeating(nameof(SetDestination), 3f, chaseInterval);
-        float randomSpeed = Random.Range(1.2f, 2.5f);
+        float randomSpeed = Random.Range(0.6f, 1f);
         zombieNavMeshAgent.speed = randomSpeed;
         zombieAnimator.speed = randomSpeed;
         if (SFXAtaque) SFXAtaque.SetActive(false);
@@ -104,7 +110,7 @@ public class ZombieEnemigo : MonoBehaviour
     private void UpdateUI()
     {
         SaludTexto.text = "Salud " + Salud;
-        BarraVida.fillAmount = Salud / 100f;
+        BarraVida.fillAmount = Salud / SaludTotal;
     }
     private void Muerte()
     {

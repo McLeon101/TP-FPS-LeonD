@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RecibirDaño : MonoBehaviour
 {
-    [SerializeField] private int Salud = 100;
+    [SerializeField] private float Salud = 100;
     [SerializeField] private TextMeshProUGUI SaludTexto;
     [SerializeField] private Image BarraVida;
 
@@ -29,7 +29,7 @@ public class RecibirDaño : MonoBehaviour
         if (collision.gameObject.CompareTag("Bala"))
         {
             //Hace el daño al enemigo y actualiza el texto
-            int DañoBala = collision.gameObject.GetComponent<DañoBala>().CantidadDaño;
+            float DañoBala = collision.gameObject.GetComponent<DañoBala>().CantidadDaño;
             Salud -= DañoBala;
             UpdateUI();
 

@@ -16,6 +16,9 @@ public class MiArma : MonoBehaviour
     [SerializeField] bool Municion = true;
     private float siguienteDisparo = 0f;
 
+    private bool LuzON = false;
+    [SerializeField] GameObject LuzLinterna;
+
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip SonidoDisparo;
     [SerializeField] AudioClip SonidoSinBala;
@@ -37,6 +40,7 @@ public class MiArma : MonoBehaviour
         UpdateUI();
         CantidadBalasTexto.text = "Balas: " + cargador.ToString() + "/9";
         SpawnRifle = GetComponent<Animator>();
+        LuzLinterna.SetActive(LuzON);
     }
     void Update()
     {
@@ -54,6 +58,19 @@ public class MiArma : MonoBehaviour
             CantidadBalasTexto.text = "Balas: " + cargador.ToString() + "/9";
             if (SonidoRecarga != null && audioSource != null)
             { audioSource.PlayOneShot(SonidoRecarga); }
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (LuzON == false)
+            {
+                LuzON = true;
+                LuzLinterna.SetActive(LuzON);
+            }
+            else if (LuzON == true)
+            {
+                LuzON = false;
+                LuzLinterna.SetActive(LuzON);
+            }
         }
     }
 
