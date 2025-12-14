@@ -163,6 +163,6 @@ public class MiArma : MonoBehaviour
     }    
     private void UpdateUI()
     {
-        ModoArmaText.text = "Modo de arma: " + mododefuego.ToString();
+        ModoArmaText.text = "Modo de arma: \n" + mododefuego.ToString();
     }
 }

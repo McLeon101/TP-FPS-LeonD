@@ -16,8 +16,8 @@ public class ReglasDeJuego : MonoBehaviour
 
     public int PuntosMoneda = 0; //Puntos moneda
     public int TotalMonedas = 0; //Total monedas
-    public TextMeshProUGUI TextPMonedas;
-    public string MonedaTag = "Moneda";
+  //public TextMeshProUGUI TextPMonedas;
+  //public string MonedaTag = "Moneda";
     public int PuntosPorMoneda = 1;
 
     public GameObject PerderPanel;
