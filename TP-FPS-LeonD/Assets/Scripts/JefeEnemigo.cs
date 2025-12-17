@@ -9,7 +9,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class JefeEnemigo : MonoBehaviour
 {
-    [SerializeField] private float SaludTotal = 500f;
+    [SerializeField] private float SaludTotal = 1000f;
     private float Salud;
     [SerializeField] private TextMeshProUGUI SaludTexto;
     [SerializeField] private Image BarraVida;
@@ -127,8 +127,11 @@ public class JefeEnemigo : MonoBehaviour
     private void Muerte()
     {
         zombieNavMeshAgent.isStopped = true;
+        DañoZombie = 0;
+
         Vector3 offset = new Vector3(0, 2f, 0);
         Instantiate(Corona, transform.position + offset, Quaternion.identity);
+
         Destroy(gameObject, 1.5f);
     }
     void RuidoAtaque()
