@@ -26,6 +26,8 @@ public class JefeEnemigo : MonoBehaviour
     public int PuntosPorZombie = 1;
     public int DañoZombie = 50;
 
+    [SerializeField] GameObject Corona;
+
     public GameObject SFXAtaque;
     private Coroutine RutinAtaque;
 
@@ -114,6 +116,8 @@ public class JefeEnemigo : MonoBehaviour
     private void Muerte()
     {
         zombieNavMeshAgent.isStopped = true;
+        Vector3 offset = new Vector3(0, 1.2f, 0);
+        Instantiate(Corona, transform.position + offset, Quaternion.identity);
         Destroy(gameObject, 1.5f);
     }
     void RuidoAtaque()

@@ -8,17 +8,17 @@ public class ReglasDeJuego : MonoBehaviour
 {
     public static ReglasDeJuego instance;
 
-    public int PuntosZombie = 0; //Puntos zombies
-    public int totalpuntoszombies = 0; //Total zombies
+    [HideInInspector] public int PuntosZombie = 0; //Puntos zombies
+    [HideInInspector] public int totalpuntoszombies = 0; //Total zombies
     public TextMeshProUGUI TextPZombie; //Texto para UI
     public string EnemigoTag = "Enemigo"; //Etiqueta de Puntos
-    public int PuntosPorZombie = 1; //Puntos que da por zombie
+    [HideInInspector] public int PuntosPorZombie = 1; //Puntos que da por zombie
 
-    public int PuntosMoneda = 0; //Puntos moneda
-    public int TotalMonedas = 0; //Total monedas
+    [HideInInspector] public int PuntosMoneda = 0; //Puntos moneda
+    [HideInInspector] public int TotalMonedas = 0; //Total monedas
   //public TextMeshProUGUI TextPMonedas;
   //public string MonedaTag = "Moneda";
-    public int PuntosPorMoneda = 1;
+    [HideInInspector] public int PuntosPorMoneda = 1;
 
     public GameObject PerderPanel;
     public GameObject GanarPanel;
@@ -30,6 +30,13 @@ public class ReglasDeJuego : MonoBehaviour
     [SerializeField] AudioClip SonidoVictoria;
     [SerializeField] AudioClip SonidoDerrota;
     [SerializeField] AudioClip MusicaAmbiente;
+
+    [SerializeField] TextMeshProUGUI TiempoText;
+    private float Tiempo;
+    [HideInInspector] public int SegundosJugados = 0;
+    [HideInInspector] public int MinutosJugados = 0;
+    const string CLAVE_RECORD = "MejorTiempo";
+    [SerializeField] TextMeshProUGUI RecordText;
 
     public GameObject LlaveImage;
 
@@ -62,7 +69,18 @@ public class ReglasDeJuego : MonoBehaviour
         }
         MusicaJuego();
         audioSource.volume = 0.2f;
+        MostrarRecord();
     }
+
+    private void Update()
+    {
+        Tiempo += Time.deltaTime;
+        MinutosJugados = Mathf.FloorToInt(Tiempo / 60);
+        SegundosJugados = Mathf.FloorToInt(Tiempo % 60);
+        UpdateScoreUI();
+    }
+
+
     //public void SumarPunto(int amount)
     //{
     //    PuntosZombie += amount;
@@ -93,6 +111,7 @@ public class ReglasDeJuego : MonoBehaviour
         }
         MusicaVictoria();
         DesbloquearMouse();
+        GuardarRecord();
         Time.timeScale = 0f; // Pausar el juego
     }
     public void Perder()
@@ -115,6 +134,11 @@ public class ReglasDeJuego : MonoBehaviour
         //{
         //    TextPMonedas.text = "Monedas: " + PuntosMoneda + "/" + TotalMonedas;
         //}
+
+        if (TiempoText != null)
+        {
+            TiempoText.text = MinutosJugados + ":" + SegundosJugados.ToString("00");
+        }
     }
 
     internal void SumarPunto()
@@ -164,5 +188,32 @@ public class ReglasDeJuego : MonoBehaviour
     public void TomarLLave()
     {
         LlaveImage.SetActive(true);
+    }
+    void GuardarRecord()
+    {
+        float recordGuardado = PlayerPrefs.GetFloat(CLAVE_RECORD, 0);
+
+        if (recordGuardado == 0 || Tiempo < recordGuardado)
+        {
+            PlayerPrefs.SetFloat(CLAVE_RECORD, Tiempo);
+            PlayerPrefs.Save();
+        }
+    }
+    void MostrarRecord()
+    {
+        if (RecordText == null) return;
+
+        float record = PlayerPrefs.GetFloat(CLAVE_RECORD, 0);
+
+        if (record > 0)
+        {
+            int min = Mathf.FloorToInt(record / 60);
+            int seg = Mathf.FloorToInt(record % 60);
+            RecordText.text = "Récord: " + min + ":" + seg.ToString("00");
+        }
+        else
+        {
+            RecordText.text = "Récord: --:--";
+        }
     }
 }
