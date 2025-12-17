@@ -111,7 +111,7 @@ public class ZombieEnemigo : MonoBehaviour
     {
         zombieNavMeshAgent.isStopped = true;
         DañoZombie = 0;
-        Vector3 offset = new Vector3(0, 1.2f, 0);
+        Vector3 offset = new Vector3(0, 2f, 0);
         Instantiate(Moneda, transform.position + offset, Quaternion.identity);
         Destroy(gameObject, 1.5f);
     }

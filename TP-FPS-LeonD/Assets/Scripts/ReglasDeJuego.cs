@@ -20,8 +20,11 @@ public class ReglasDeJuego : MonoBehaviour
   //public string MonedaTag = "Moneda";
     [HideInInspector] public int PuntosPorMoneda = 1;
 
+    [HideInInspector] public bool TengoCorona = false;
+
     public GameObject PerderPanel;
     public GameObject GanarPanel;
+    public TextMeshProUGUI CoronaText;
 
     public GameObject Player;
     public GameObject PlayerCamera;
@@ -70,6 +73,7 @@ public class ReglasDeJuego : MonoBehaviour
         MusicaJuego();
         audioSource.volume = 0.2f;
         MostrarRecord();
+        CoronaText.text = "Busca la corona";
     }
 
     private void Update()
@@ -87,22 +91,13 @@ public class ReglasDeJuego : MonoBehaviour
     //    UpdateScoreUI();
     //    RevisarVictoria();
     //}
-
-    public void SumarMoneda(int amount)
-    {
-        PuntosMoneda += 1;
-        UpdateScoreUI();
-        RevisarVictoria();
-    }
-
     public void RevisarVictoria()
     {
-        if (PuntosMoneda >= totalpuntoszombies)
+        if (PuntosMoneda >= totalpuntoszombies && TengoCorona == true)
         {
             Win();
         }
     }
-
     void Win()
     {
         if (GanarPanel)
@@ -140,8 +135,19 @@ public class ReglasDeJuego : MonoBehaviour
             TiempoText.text = MinutosJugados + ":" + SegundosJugados.ToString("00");
         }
     }
-
-    internal void SumarPunto()
+    public void SumarMoneda(int amount)
+    {
+        PuntosMoneda += 1;
+        UpdateScoreUI();
+        RevisarVictoria();
+    }
+    public void SumarCorona()
+    {
+        TengoCorona = true;
+        CoronaText.text = "Tienes la corona";
+        RevisarVictoria();
+    }
+    public void SumarPunto()
     {
         throw new NotImplementedException();
     }

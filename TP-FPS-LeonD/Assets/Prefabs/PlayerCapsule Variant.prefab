@@ -44,11 +44,11 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 0
-  m_Color: {r: 1, g: 0.84479016, b: 0.33490568, a: 1}
-  m_Intensity: 15
-  m_Range: 35
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_Color: {r: 1, g: 0.8798679, b: 0, a: 1}
+  m_Intensity: 40
+  m_Range: 70
+  m_SpotAngle: 75
+  m_InnerSpotAngle: 35
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 1
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -191,7 +191,7 @@ MonoBehaviour:
   ModoArmaText: {fileID: 0}
   CantidadBalasTexto: {fileID: 0}
   mododefuego: 0
-  SpawnRifle: {fileID: 0}
+  SpawnRifle: {fileID: 3093539741755496090}
   VFXdisparo: {fileID: 7067616245240895915, guid: be7e2c14bacc5aa41ba4129ac013c1a2, type: 3}
 --- !u!82 &4252085500444525209
 AudioSource:
@@ -852,7 +852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 72.22965
+      value: 139.92
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalPosition.y
@@ -860,7 +860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 58.225075
+      value: 137.78
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalRotation.w
@@ -912,6 +912,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4978975216766765289}
+    - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7953952556564537605}
     - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5350865253211978498}
@@ -1006,6 +1009,21 @@ MonoBehaviour:
   llave: {fileID: 8300000, guid: 4846717ca847fcf44b8ac146d0dff5c7, type: 3}
   tomarllave: {fileID: 0}
   abrirporton: {fileID: 0}
+--- !u!114 &7953952556564537605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567161997629968636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7824c3c937c104a4eb1abb0f0f9cfb88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoronaColeccionable
+  CoronaTag: Corona
+  audioSource: {fileID: 0}
+  Moneda: {fileID: 8300000, guid: 4846717ca847fcf44b8ac146d0dff5c7, type: 3}
 --- !u!82 &5350865253211978498
 AudioSource:
   m_ObjectHideFlags: 0

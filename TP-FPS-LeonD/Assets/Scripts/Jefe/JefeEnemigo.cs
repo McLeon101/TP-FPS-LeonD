@@ -20,7 +20,7 @@ public class JefeEnemigo : MonoBehaviour
     [SerializeField] AudioClip SonidoAtaque;
     private NavMeshAgent zombieNavMeshAgent;
     [SerializeField] Transform Player;
-    [SerializeField] float chaseInterval = 0.5f;
+    [SerializeField] float chaseInterval = 1f;
     private ReglasDeJuego reglasdejuego;
     private VidaPlayer vidaplayer;
     public int PuntosPorZombie = 1;
@@ -30,6 +30,8 @@ public class JefeEnemigo : MonoBehaviour
 
     public GameObject SFXAtaque;
     private Coroutine RutinAtaque;
+
+    public bool puedePerseguir = false;
 
     void Awake()
     {
@@ -50,17 +52,17 @@ public class JefeEnemigo : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
-        InvokeRepeating(nameof(SetDestination), 3f, chaseInterval);
-        zombieNavMeshAgent.speed = 2f;
-        zombieAnimator.speed = 2f;
+
+        zombieNavMeshAgent.speed = 3f;
+        zombieAnimator.speed = 3f;
         if (SFXAtaque) SFXAtaque.SetActive(false);
     }
     private void Update()
     {
-        if (zombieAnimator != null)
-        {
-            zombieAnimator.SetFloat("MoveSpeed", zombieNavMeshAgent.velocity.magnitude);
-        }
+            if (zombieAnimator != null)
+            {
+                zombieAnimator.SetFloat("MoveSpeed", zombieNavMeshAgent.velocity.magnitude);
+            }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -106,7 +108,16 @@ public class JefeEnemigo : MonoBehaviour
 
     public void SetDestination()
     {
+        if (!puedePerseguir) return;
+
         zombieNavMeshAgent.SetDestination(Player.position);
+    }
+    public void ActivarPersecucion()
+    {
+        if (puedePerseguir) return;
+
+        puedePerseguir = true;
+        InvokeRepeating(nameof(SetDestination), 1f, chaseInterval);
     }
     private void UpdateUI()
     {
@@ -116,7 +127,7 @@ public class JefeEnemigo : MonoBehaviour
     private void Muerte()
     {
         zombieNavMeshAgent.isStopped = true;
-        Vector3 offset = new Vector3(0, 1.2f, 0);
+        Vector3 offset = new Vector3(0, 2f, 0);
         Instantiate(Corona, transform.position + offset, Quaternion.identity);
         Destroy(gameObject, 1.5f);
     }
