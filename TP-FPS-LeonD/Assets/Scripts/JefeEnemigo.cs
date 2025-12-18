@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using Unity.AI;
@@ -52,7 +53,6 @@ public class JefeEnemigo : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
-
         zombieNavMeshAgent.speed = 3f;
         zombieAnimator.speed = 3f;
         if (SFXAtaque) SFXAtaque.SetActive(false);
@@ -78,11 +78,6 @@ public class JefeEnemigo : MonoBehaviour
             {
                 RuidoMuerte();
                 zombieAnimator.SetTrigger("Dead");
-                //Destruye objeto
-                //if (reglasdejuego != null)
-                //{
-                //    reglasdejuego.SumarPunto(PuntosPorZombie);
-                //}
                 Muerte();
             }
             else
@@ -128,12 +123,12 @@ public class JefeEnemigo : MonoBehaviour
     {
         zombieNavMeshAgent.isStopped = true;
         DañoZombie = 0;
-
-        Vector3 offset = new Vector3(0, 2f, 0);
+        Vector3 offset = new (0, 8f, 0);
         Instantiate(Corona, transform.position + offset, Quaternion.identity);
 
         Destroy(gameObject, 1.5f);
     }
+
     void RuidoAtaque()
     {
         if (SonidoMuerte != null && audioSource != null && !audioSource.isPlaying)

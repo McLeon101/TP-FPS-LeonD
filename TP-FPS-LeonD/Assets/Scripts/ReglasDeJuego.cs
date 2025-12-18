@@ -85,15 +85,15 @@ public class ReglasDeJuego : MonoBehaviour
     }
 
 
-    //public void SumarPunto(int amount)
-    //{
-    //    PuntosZombie += amount;
-    //    UpdateScoreUI();
-    //    RevisarVictoria();
-    //}
+    public void SumarPunto(int amount)
+    {
+        PuntosZombie += amount;
+        UpdateScoreUI();
+        RevisarVictoria();
+    }
     public void RevisarVictoria()
     {
-        if (PuntosMoneda >= totalpuntoszombies && TengoCorona == true)
+        if (PuntosZombie >= totalpuntoszombies && TengoCorona == true)
         {
             Win();
         }
@@ -123,7 +123,7 @@ public class ReglasDeJuego : MonoBehaviour
     {
         if (TextPZombie != null)
         {
-            TextPZombie.text = "Moneda: " + PuntosMoneda + "/" + totalpuntoszombies;
+            TextPZombie.text = "Zombies: " + PuntosZombie + "/" + totalpuntoszombies;
         }
         //if (TextPMonedas != null)
         //{
