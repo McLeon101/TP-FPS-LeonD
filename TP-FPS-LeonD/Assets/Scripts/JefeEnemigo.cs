@@ -53,8 +53,8 @@ public class JefeEnemigo : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
-        zombieNavMeshAgent.speed = 3f;
-        zombieAnimator.speed = 3f;
+        zombieNavMeshAgent.speed = 5f;
+        zombieAnimator.speed = 5f;
         if (SFXAtaque) SFXAtaque.SetActive(false);
     }
     private void Update()
@@ -76,8 +76,6 @@ public class JefeEnemigo : MonoBehaviour
             //Sonido de daño, muerte y aplicar muerte
             if (Salud == 0)
             {
-                RuidoMuerte();
-                zombieAnimator.SetTrigger("Dead");
                 Muerte();
             }
             else
@@ -121,11 +119,13 @@ public class JefeEnemigo : MonoBehaviour
     }
     private void Muerte()
     {
+        Vector3 SpawnCorona = transform.position;
+        SpawnCorona.y = 1f;
+        Instantiate(Corona, SpawnCorona, Quaternion.identity);
+        RuidoMuerte();
+        zombieAnimator.SetTrigger("Dead");
         zombieNavMeshAgent.isStopped = true;
         DañoZombie = 0;
-
-        Instantiate(Corona, transform.position, Quaternion.identity);
-
         Destroy(gameObject, 1.5f);
     }
 

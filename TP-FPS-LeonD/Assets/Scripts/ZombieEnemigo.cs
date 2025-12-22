@@ -68,9 +68,6 @@ public class ZombieEnemigo : MonoBehaviour
             //Sonido de daño, muerte y aplicar muerte
             if (Salud == 0)
             {
-                RuidoMuerte();
-                zombieAnimator.SetTrigger("Dead");
-                //Destruye objeto
                 if (reglasdejuego != null)
                 {
                     reglasdejuego.SumarPunto(PuntosPorZombie);
@@ -81,7 +78,6 @@ public class ZombieEnemigo : MonoBehaviour
             {
                 RuidoDaño();
             }
-
             //Destruye bala
             Destroy(collision.gameObject);
         }
@@ -109,10 +105,13 @@ public class ZombieEnemigo : MonoBehaviour
     }
     private void Muerte()
     {
+        Vector3 SpawnMoneda = transform.position;
+        SpawnMoneda.y = 1f;
+        Instantiate(Moneda, SpawnMoneda, Quaternion.identity);
+        RuidoMuerte();
+        zombieAnimator.SetTrigger("Dead");
         zombieNavMeshAgent.isStopped = true;
         DañoZombie = 0;
-        //Vector3 offset3 = new Vector3(0, 1.5f, 0);
-        Instantiate(Moneda, transform.position, Quaternion.identity);
         Destroy(gameObject, 1.5f);
     }
     void RuidoAtaque()
