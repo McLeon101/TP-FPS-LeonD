@@ -13,6 +13,7 @@ TagManager:
   - Jefe
   - Llave
   - Corona
+  - Suelo
   layers:
   - Default
   - TransparentFX

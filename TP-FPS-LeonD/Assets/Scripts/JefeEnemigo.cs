@@ -123,8 +123,8 @@ public class JefeEnemigo : MonoBehaviour
     {
         zombieNavMeshAgent.isStopped = true;
         DañoZombie = 0;
-        Vector3 offset = new (0, 8f, 0);
-        Instantiate(Corona, transform.position + offset, Quaternion.identity);
+
+        Instantiate(Corona, transform.position, Quaternion.identity);
 
         Destroy(gameObject, 1.5f);
     }
